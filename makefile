@@ -1,7 +1,14 @@
-.PHONY: up down tf-apply tf-destroy
+.PHONY: up down tf-apply tf-destroy seed install
 
 # Minikube
 MINIKUBE_PROFILE=paysera
+
+# Python configuration
+PYTHON=python3
+PIP=$(PYTHON) -m pip
+REQUIREMENTS=utils/requirements.txt
+
+export PGPASSWORD=postgres
 
 ## Minikube + MetalLB
 up:
@@ -29,3 +36,14 @@ tf-apply:
 tf-destroy:
 	@echo "Running Terraform destroy..."
 	terraform destroy --auto-approve
+
+## Seed Python dependencies install
+install:
+	@echo "Installing Python dependencies..."
+	$(PIP) install --upgrade pip
+	$(PIP) install -r $(REQUIREMENTS)
+
+## Seed
+seed: install
+	@echo "Seeding the PostgreSQL database with synthetic data..."
+	$(PYTHON) utils/seed.py
