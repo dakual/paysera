@@ -1,4 +1,4 @@
-.PHONY: up down
+.PHONY: up down tf-apply tf-destroy
 
 # Minikube
 MINIKUBE_PROFILE=paysera
@@ -19,3 +19,13 @@ down:
 	@echo "Deleting Minikube cluster and cleaning up..."
 	minikube delete --profile=$(MINIKUBE_PROFILE)
 	@echo "Cluster deleted."
+
+# Terraform apply
+tf-apply:
+	@echo "Running Terraform apply..."
+	terraform init && terraform apply --auto-approve
+
+# Terraform destroy
+tf-destroy:
+	@echo "Running Terraform destroy..."
+	terraform destroy --auto-approve
