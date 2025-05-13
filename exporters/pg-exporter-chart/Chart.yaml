@@ -1,0 +1,8 @@
+apiVersion: v2
+name: pg-exporter
+description: A Helm chart for Postgres
+type: application
+version: 1.0.0
+maintainers:
+- email: daghan.altunsoy@gmail.com
+  name: dakual

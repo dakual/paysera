@@ -59,6 +59,7 @@ resource "kubectl_manifest" "hpa" {
     yaml_body = file("${path.module}/k8s/hpa.yaml")
 }
 
+
 # data "kubectl_path_documents" "exporters" {
 #   pattern = "${path.module}/exporters/*.yaml"
 # }
@@ -70,5 +71,16 @@ resource "kubectl_manifest" "hpa" {
 #   depends_on = [
 #     helm_release.prometheus,
 #     helm_release.grafana
+#   ]
+# }
+
+# resource "helm_release" "exporter" {
+#   name          = "pg-exporter"
+#   namespace     = kubernetes_namespace.monitoring.metadata.0.name
+#   chart         = "exporters/pg-exporter-chart"
+
+#   depends_on = [
+#     kubernetes_namespace.monitoring,
+#     helm_release.prometheus
 #   ]
 # }
