@@ -1,4 +1,4 @@
-.PHONY: up down tf-apply tf-destroy seed install bench expose
+.PHONY: up down tf-apply tf-destroy seed install bench expose backup restore
 
 # Minikube
 MINIKUBE_PROFILE=paysera
@@ -65,3 +65,11 @@ expose:
 
 	@echo "Exposing PostgreSQL on localhost:5432"
 	kubectl port-forward svc/paysera-postgresql-ha-pgpool 5432:5432 -n paysera &
+
+backup:
+	@echo "Backuping postgres database..."
+	kubectl exec -it paysera-postgresql-ha-postgresql-0 -n paysera -c postgresql -- env PGPASSWORD='postgres' pg_dumpall -U postgres > backup.sql
+
+restore:
+	@echo "Restoring postgres database..."
+	kubectl exec -i paysera-postgresql-ha-postgresql-0 -n paysera -c postgresql -- env PGPASSWORD='postgres' psql -U postgres < backup.sql
