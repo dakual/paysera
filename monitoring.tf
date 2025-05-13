@@ -54,3 +54,7 @@ resource "kubernetes_config_map" "grafana_dashboard" {
     "custom-dashboard.json" = file("${path.module}/dashboards/postgresql.json")
   }
 }
+
+resource "kubectl_manifest" "hpa" {
+    yaml_body = file("${path.module}/k8s/hpa.yaml")
+}
