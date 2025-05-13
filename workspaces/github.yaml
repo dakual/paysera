@@ -1,0 +1,16 @@
+environment: github
+namespace: paysera
+database:
+  postgresql:
+    replicaCount: 1
+    username: postgres
+    password: postgres
+    database: postgres
+    postgresPassword: postgres
+
+  pgpool:
+    adminUsername: postgres
+    adminPassword: postgres
+
+  metrics:
+    enabled: true

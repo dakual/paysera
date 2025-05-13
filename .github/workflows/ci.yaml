@@ -31,3 +31,16 @@ jobs:
     - name: Start Minikube
       run: |
         make up
+
+    - name: Install Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Run Infrastructure Setup
+      run: |
+        terraform workspace new github
+        make tf-apply
+
+    - name: Smoke Test
+      run: |
+        kubectl get pods -A
+        kubectl get svc -A
