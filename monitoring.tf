@@ -58,3 +58,17 @@ resource "kubernetes_config_map" "grafana_dashboard" {
 resource "kubectl_manifest" "hpa" {
     yaml_body = file("${path.module}/k8s/hpa.yaml")
 }
+
+# data "kubectl_path_documents" "exporters" {
+#   pattern = "${path.module}/exporters/*.yaml"
+# }
+
+# resource "kubectl_manifest" "exporters" {
+#   for_each  = { for k in toset(data.kubectl_path_documents.exporters.documents) : k => k if true }
+#   yaml_body = each.value
+
+#   depends_on = [
+#     helm_release.prometheus,
+#     helm_release.grafana
+#   ]
+# }
