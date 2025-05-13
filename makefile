@@ -1,4 +1,4 @@
-.PHONY: up down tf-apply tf-destroy seed install bench
+.PHONY: up down tf-apply tf-destroy seed install bench expose
 
 # Minikube
 MINIKUBE_PROFILE=paysera
@@ -51,3 +51,17 @@ seed: install
 bench:
 	@echo "Running bench test..."
 	bash ./utils/bench.sh
+
+# Expose apps
+expose:
+	@echo "Exposing Prometheus on http://localhost:9090"
+	kubectl port-forward svc/prometheus-server 9090:80 -n monitoring &
+
+	@echo "Exposing Grafana on http://localhost:3000"
+	kubectl port-forward svc/grafana 3000:80 -n monitoring &
+
+	@echo "Exposing Alertmanager on http://localhost:9093"
+	kubectl port-forward svc/prometheus-alertmanager 9093:9093 -n monitoring &
+
+	@echo "Exposing PostgreSQL on localhost:5432"
+	kubectl port-forward svc/paysera-postgresql-ha-pgpool 5432:5432 -n paysera &
