@@ -1,4 +1,4 @@
-.PHONY: up down tf-apply tf-destroy seed install
+.PHONY: up down tf-apply tf-destroy seed install bench
 
 # Minikube
 MINIKUBE_PROFILE=paysera
@@ -47,3 +47,7 @@ install:
 seed: install
 	@echo "Seeding the PostgreSQL database with synthetic data..."
 	$(PYTHON) utils/seed.py
+
+bench:
+	@echo "Running bench test..."
+	bash ./utils/bench.sh
