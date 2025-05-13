@@ -1,7 +1,7 @@
 resource "helm_release" "db" {
   chart         = "postgresql-ha"
   name          = "paysera"
-  namespace     = "paysera"
+  namespace     = local.var.namespace
   repository    = "oci://registry-1.docker.io/bitnamicharts"
   version       = "16.0.3"
   wait          = true
