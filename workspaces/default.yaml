@@ -1,0 +1,21 @@
+environment: dev
+namespace: paysera
+database:
+  postgresql:
+    replicaCount: 3
+    username: postgres
+    password: postgres
+    database: postgres
+    postgresPassword: postgres
+
+  persistence:
+    enabled: true
+    storageClass: "paysera"
+    size: 2Gi
+
+  pgpool:
+    adminUsername: postgres
+    adminPassword: postgres
+
+  metrics:
+    enabled: true
